@@ -1,6 +1,3 @@
-def test{
- a="a";
- b="b";
-}
-a="b";
-test;
+if true:
+ true
+ 

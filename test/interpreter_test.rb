@@ -3,24 +3,23 @@ require "interpreter"
 
 class InterpreterTest < Test::Unit::TestCase
   def test_number
-    assert_equal 1, Interpreter.new.eval("1;").ruby_value
+    assert_equal 1, Interpreter.new.eval("1").ruby_value
   end
   
   def test_true
-    assert_equal true, Interpreter.new.eval("true;").ruby_value
+    assert_equal true, Interpreter.new.eval("true").ruby_value
   end
   
   def test_assign
-    assert_equal 2, Interpreter.new.eval("a = 2; 3; a;").ruby_value
+    assert_equal 2, Interpreter.new.eval("a = 2; 3; a").ruby_value
   end
   
   def test_method
     code = <<-CODE
-def boo(a){
-  a;
-}  
+def boo(a):
+  a
 
-boo("yah!");
+boo("yah!")
 CODE
     
     assert_equal "yah!", Interpreter.new.eval(code).ruby_value
@@ -41,30 +40,29 @@ CODE
 
   def test_lambda
     code = <<-CODE
-a = \\(a,b){true;};
-a(1,2);
+a = ^a,b(true)
+a(1,2)
 CODE
    assert_equal true, Interpreter.new.eval(code).ruby_value
   end
-
   def test_prototype
     code = <<-CODE
-a=clone;
-a["@name"]="Jhon";
-a["@age"]=21;
-a["myfunc"] = \\{print(@name);};
-a.myfunc;
+a=clone
+a["@name"]="Jhon"
+a["@age"]=21
+a["myfunc"] = ^(print(@name))
+a.myfunc
 CODE
+# assert_equal 6, Interpreter.new.eval(code).ruby_value
   assert_prints("Jhon\n") { Interpreter.new.eval(code) }
 end
   def test_define_class
     code = <<-CODE
-class Pony{
-  def awesome{
-    true;
-  }
-}  
-Pony.new.awesome;
+class Pony:
+  def awesome:
+    true
+
+Pony.new.awesome
 CODE
     
     assert_equal true, Interpreter.new.eval(code).ruby_value
@@ -72,9 +70,8 @@ CODE
   
   def test_if
     code = <<-CODE
-if true{
-  "works!";
-}
+if true:
+  "works!"
 CODE
     
     assert_equal "works!", Interpreter.new.eval(code).ruby_value
@@ -83,18 +80,15 @@ CODE
   
   def test_interpret
     code = <<-CODE
-class Awesome{
-  def does_it_work{
-    "yeah!";
-    }
-  }
-awesome_object = Awesome.new;
-if awesome_object{
-  print(awesome_object.does_it_work);
-}
+class Awesome:
+  def does_it_work:
+    "yeah!"
+
+awesome_object = Awesome.new
+if awesome_object:
+  print(awesome_object.does_it_work)
 CODE
     
     assert_prints("yeah!\n") { Interpreter.new.eval(code) }
   end
-  
 end
