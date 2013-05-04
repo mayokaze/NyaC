@@ -79,9 +79,9 @@ rule
   Literal:
     NUMBER                        { result = NumberNode.new(val[0]) }
   | STRING                        { result = StringNode.new(val[0]) }
-  | TRUE                          { result = BoolNode.new(true)}
-  | FALSE                         { result = BoolNode.new(false) }
-  | NIL                           { result = BoolNode.new(nil) }
+  | TRUE                          { result = TrueNode.new }
+  | FALSE                         { result = FalseNode.new }
+  | NIL                           { result = NilNode.new }
   ;
   
   
@@ -164,8 +164,7 @@ rule
   
  
   If:
-   IF Expression Block ELSE Block { result = IfNode.new(val[1], val[2],val[4]) }
-  |IF Expression Block   { result = IfNode.new(val[1], val[2],nil) }
+    IF Expression Block           { result = IfNode.new(val[1], val[2]) }
   ;
   
   While:
@@ -176,7 +175,7 @@ rule
    Expression UNLESS Expression    { result = UnlessNode.new(val[2], val[0]) }
   ;
   
-  #Indentation based block could be replaced with "{" and "}"
+  #Indentation based block could be replaced by "{" and "}"
   Block:
     INDENT Expressions DEDENT     { result = val[1] }
    ;
