@@ -1,5 +1,5 @@
 class Lexer
-  KEYWORDS = ["def", "while","class", "if", "else","true", "false", "nil","unless"]
+  KEYWORDS = ["def", "while","class", "if", "true", "false", "nil","unless"]
   
   def tokenize(code)
     code.chomp!
@@ -49,7 +49,6 @@ class Lexer
           while indent.size < current_indent
             indent_stack.pop
             current_indent = indent_stack.last || 0
-          #  p "dedent"
             tokens << [:DEDENT, indent.size]
           end
           tokens << [:NEWLINE, "\n"]
