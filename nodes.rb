@@ -133,12 +133,10 @@ class SetLocalNode < Struct.new(:name, :value)
   end
 end
 
-class IfNode  < Struct.new(:condition, :body, :else_body)
+class IfNode  < Struct.new(:condition, :body)
   def eval(env)
     if condition.eval(env).ruby_value
       body.eval(env)
-    else
-      else_body.eval(env) if else_body
     end
   end
 end
