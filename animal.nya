@@ -1,0 +1,5 @@
+class Animal{
+ def cry{
+  print("animal cry")
+ }
+}
