@@ -1,0 +1,6 @@
+a=clone
+a["name"]="Jhon"
+a["@age"]=21
+a["myfunc"] = ^a,b,c(a+b+c)
+c=a.myfunc(1,2,3)
+print(c)
